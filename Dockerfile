@@ -1,11 +1,14 @@
 FROM eclipse-temurin:17-jdk-alpine
-    
 EXPOSE 8085
- 
+
+# Set environment variable for app home
 ENV APP_HOME /usr/src/app
 
-COPY target/*.jar $APP_HOME/app.jar
+# Create the app directory (if it doesn't exist)
+RUN mkdir -p $APP_HOME
 
-WORKDIR $APP_HOME
+# Copy the jar file(s) into the app directory
+COPY target/*.jar $APP_HOME/
 
-CMD ["java", "-jar", "app.jar"]
+# Command to run the application (change app.jar if needed)
+CMD ["java", "-jar", "/usr/src/app/app.jar"]
