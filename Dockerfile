@@ -11,4 +11,4 @@ RUN mkdir -p $APP_HOME
 COPY target/*.jar $APP_HOME/
 
 # Command to run the application (change app.jar if needed)
-CMD ["java", "-jar", "/usr/src/app/app.jar"]
+CMD ["java", "-jar", "/usr/src/app/twitter-app-0.0.18.jar"]
