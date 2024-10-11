@@ -1,5 +1,11 @@
-FROM eclipse-temurin:17-jdk-alpine
-EXPOSE 8080
-ENV APP_HOME /usr/src/app
-COPY target/*.jar $APP_HOME/
-CMD ["java", "-jar", "$APP_HOME/app.jar"]
+# Stage 1: Build the application
+FROM maven:3.8.6-openjdk-17 AS builder
+WORKDIR /usr/src/app
+COPY . .
+RUN mvn clean package
+
+# Stage 2: Create the final runtime image
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /usr/src/app
+COPY --from=builder /usr/src/app/target/app.jar .
+CMD ["java", "-jar", "app.jar"]
